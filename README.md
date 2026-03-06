@@ -62,7 +62,7 @@ Para ejecutar el programa:
 2. Abrir el archivo principal en Python
 3. Ejecutar el código
 4. Seleccionar las unidades de medida deseadas
-5. 
+5. Ingresar los valores del ejercicio a resolver
 
 El programa solicitará los datos de entrada y calculará automáticamente
 los resultados del análisis de fatiga.
