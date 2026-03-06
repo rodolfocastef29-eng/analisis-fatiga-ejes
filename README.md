@@ -41,7 +41,8 @@ Python 3
 
 # Interpolación de Datos
 
-El software utiliza **interpolación lineal** para obtener valores intermedios a partir de datos digitalizados de las gráficas del libro.
+El software utiliza **interpolación lineal** para obtener valores intermedios a partir de datos digitalizados de las gráficas del libro Shigley, J. E., Budynas, R. G., & Nisbett, J. K.
+Mechanical Engineering Design.
 
 Las interpolaciones implementadas son:
 
