@@ -1,3 +1,33 @@
+# Ejemplo de ejecución — Caso 2
+Datos de entrada — Caso 2
+
+Cuando el programa solicite los datos, introducir los siguientes valores:
+
+Sistema inglés
+1
+Diámetro mayor 
+1.65
+Diámetro menor 
+1.10
+Radio del filete 
+0.11
+Resistencia última 
+105
+Resistencia a la fluencia 
+82
+Límite de resistencia a la fatiga 
+30
+Momento alternante 
+1260
+Momento medio 
+0
+Torque alternante 
+0
+Torque medio 
+1100
+
+# Copiar y pegar el código
+
 import math
 
 print("====================================")
