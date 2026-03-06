@@ -1,5 +1,4 @@
-# Software en Python para anlisis de fatiga en ejes escalonados
-# Software de análisis de fatiga en ejes escalonados
+# Software en Python para análisis de fatiga en ejes escalonados
 
 Este proyecto consiste en el desarrollo de un software en Python para el análisis de fatiga en ejes escalonados utilizando los criterios del libro **Shigley - Mechanical Engineering Design**.
 
@@ -17,7 +16,13 @@ El programa permite calcular automáticamente:
   - Soderberg
   - Gerber
   - ASME Elíptico
+  - 
+# Objetivo
 
+Desarrollar una herramienta computacional que permita realizar el análisis de
+fatiga en ejes escalonados de forma rápida y precisa, evitando errores en la
+lectura manual de gráficas y facilitando el estudio de diferentes condiciones
+de carga.
 ---
 
 # Autor
@@ -51,3 +56,29 @@ Esto permite que el programa calcule automáticamente los valores sin necesidad 
 # Ejecución del programa
 
 Para ejecutar el programa:
+
+1. Clonar el repositorio
+2. Abrir el archivo principal en Python
+3. Ejecutar el código
+4. Seleccionar las unidades de medida deseadas
+5. 
+
+El programa solicitará los datos de entrada y calculará automáticamente
+los resultados del análisis de fatiga.
+
+# Resultados
+
+El software calcula los siguientes parámetros:
+
+a) Sensibilidad a la muesca  
+b) Factores de concentración de esfuerzo  
+c) Factores de fatiga  
+d) Esfuerzos en la sección crítica  
+e) Esfuerzos equivalentes de Von Mises  
+f) Esfuerzo máximo equivalente  
+g) Factor de seguridad de Von Mises  
+h) Factores de seguridad por criterios de fatiga
+
+# Licencia
+
+Este proyecto se distribuye con fines educativos.
