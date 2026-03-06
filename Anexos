@@ -1,0 +1,57 @@
+Anexo A: Librerías utilizadas
+
+Para el desarrollo del software se utilizaron librerías estándar del lenguaje Python que permiten realizar cálculos matemáticos y manejar datos numéricos de forma eficiente.
+
+Las librerías utilizadas fueron las siguientes:
+
+math
+
+La librería math se utilizó para realizar operaciones matemáticas necesarias durante el análisis de esfuerzos y fatiga. Entre las funciones utilizadas se encuentran:
+
+sqrt() para calcular raíces cuadradas en la ecuación de Von Mises.
+
+pi para utilizar el valor de π en las ecuaciones de esfuerzo.
+
+Esta librería forma parte de las librerías estándar de Python, por lo que no requiere instalación adicional.
+
+numpy (si lo usaste)
+
+La librería NumPy se utilizó para facilitar el manejo de arreglos numéricos y estructuras de datos utilizadas para almacenar los valores digitalizados de las gráficas del libro. Esto permite trabajar con listas de datos y realizar operaciones numéricas de manera más eficiente.
+
+Anexo B: Referencia de las gráficas utilizadas
+
+Las gráficas utilizadas en el programa fueron obtenidas del libro:
+
+Shigley, J. E., Budynas, R. G., Nisbett, J. K.
+Mechanical Engineering Design.
+McGraw-Hill Education.
+
+Las gráficas utilizadas en el desarrollo del software fueron:
+
+Figura 6-20: Sensibilidad a la muesca para flexión (q).
+
+Figura 6-21: Sensibilidad a la muesca para torsión (qs).
+
+Figura A-15-9: Factor de concentración de esfuerzos en flexión (Kt).
+
+Figura A-15-8: Factor de concentración de esfuerzos en torsión (Kts).
+
+Estas gráficas se utilizan comúnmente en el análisis de fatiga de ejes escalonados.
+
+Anexo C: Digitalización de las gráficas
+
+Para automatizar los cálculos del programa fue necesario convertir las gráficas del libro en conjuntos de datos numéricos. Este proceso se realizó mediante un procedimiento de digitalización de las curvas.
+
+El procedimiento seguido fue el siguiente:
+
+Se seleccionaron las gráficas correspondientes del libro de Shigley.
+
+Se identificaron los ejes de cada gráfica y sus rangos de valores.
+
+Se extrajeron puntos representativos a lo largo de cada curva.
+
+Los puntos obtenidos fueron almacenados en arreglos numéricos dentro del programa.
+
+Se implementó un método de interpolación lineal para calcular valores intermedios entre los puntos digitalizados.
+
+Este procedimiento permite aproximar el comportamiento de las curvas originales y automatizar el cálculo de los factores de diseño sin necesidad de consultar manualmente las gráficas.
