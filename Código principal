@@ -1,0 +1,304 @@
+import math
+
+print("====================================")
+print(" MINI SOFTWARE FATIGA EN EJES")
+print(" basado en Shigley")
+print("====================================")
+
+# -------------------------------------------------
+# FUNCION DE INTERPOLACION
+# -------------------------------------------------
+
+def interp(x,x_tabla,y_tabla):
+
+    for i in range(len(x_tabla)-1):
+
+        if x_tabla[i] <= x <= x_tabla[i+1]:
+
+            x1=x_tabla[i]
+            x2=x_tabla[i+1]
+
+            y1=y_tabla[i]
+            y2=y_tabla[i+1]
+
+            y = y1 + (y2-y1)*(x-x1)/(x2-x1)
+
+            return y
+
+    return y_tabla[-1]
+
+
+# -------------------------------------------------
+# SISTEMA DE UNIDADES
+# -------------------------------------------------
+
+print("\nSistema de unidades")
+print("1 Ingles (pulg, lbf, ksi)")
+print("2 SI (cm, N, MPa)")
+
+sistema=int(input("Opcion: "))
+
+
+# -------------------------------------------------
+# GEOMETRIA
+# -------------------------------------------------
+
+print("\nGEOMETRIA")
+
+if sistema==1:
+
+    D=float(input("D (pulg): "))
+    d=float(input("d (pulg): "))
+    r=float(input("r (pulg): "))
+
+    unidad="ksi"
+
+else:
+
+    D=float(input("D (cm): "))
+    d=float(input("d (cm): "))
+    r=float(input("r (cm): "))
+
+    D=D/2.54
+    d=d/2.54
+    r=r/2.54
+
+    unidad="MPa"
+
+
+# -------------------------------------------------
+# MATERIAL
+# -------------------------------------------------
+
+print("\nPROPIEDADES DEL MATERIAL")
+
+if sistema==1:
+
+    Sut=float(input("Sut (ksi): "))
+    Syt=float(input("Sy (ksi): "))
+
+else:
+
+    Sut=float(input("Sut (MPa): "))
+    Syt=float(input("Sy (MPa): "))
+
+    Sut*=0.145038
+    Syt*=0.145038
+
+
+print("\nLimite de fatiga")
+
+print("1 Introducir Se")
+print("2 Usar Se = 0.5 Sut")
+
+modo=int(input("Opcion: "))
+
+if modo==1:
+
+    if sistema==1:
+
+        Se=float(input("Se (ksi): "))
+
+    else:
+
+        Se=float(input("Se (MPa): "))
+        Se*=0.145038
+
+else:
+
+    Se=0.5*Sut
+
+
+# -------------------------------------------------
+# CARGAS
+# -------------------------------------------------
+
+print("\nCARGAS")
+
+if sistema==1:
+
+    Ma=float(input("Ma (lbf*in): "))
+    Mm=float(input("Mm (lbf*in): "))
+    Ta=float(input("Ta (lbf*in): "))
+    Tm=float(input("Tm (lbf*in): "))
+
+else:
+
+    Ma=float(input("Ma (N*cm): "))
+    Mm=float(input("Mm (N*cm): "))
+    Ta=float(input("Ta (N*cm): "))
+    Tm=float(input("Tm (N*cm): "))
+
+    Ma*=0.088507
+    Mm*=0.088507
+    Ta*=0.088507
+    Tm*=0.088507
+
+
+# -------------------------------------------------
+# RELACIONES GEOMETRICAS
+# -------------------------------------------------
+
+Dd = D/d
+rd = r/d
+
+
+# -------------------------------------------------
+# TABLAS q (FIGURA 6-20)
+# -------------------------------------------------
+
+r_q=[0.01,0.02,0.03,0.04,0.05,0.06,0.08,0.10,0.11,0.12,0.14,0.16]
+
+q_60=[0.45,0.57,0.61,0.62,0.65,0.67,0.72,0.74,0.75,0.76,0.78,0.80]
+q_100=[0.6,0.66,0.70,0.715,0.77,0.8,0.80,0.83,0.85,0.855,0.86,0.88]
+q_150=[0.75,0.8,0.81,0.83,0.8325,0.835,0.84,0.845,0.85,0.89,0.91,0.93]
+
+if Sut<=80:
+
+    q=interp(r,r_q,q_60)
+
+elif Sut<=120:
+
+    q=interp(r,r_q,q_100)
+
+else:
+
+    q=interp(r,r_q,q_150)
+
+
+# -------------------------------------------------
+# TABLA qs (FIGURA 6-21)
+# -------------------------------------------------
+
+qs_60=[0.48,0.59,0.65,0.68,0.67,0.73,0.77,0.82,0.88,0.89,0.9]
+
+qs=interp(r,r_q,qs_60)
+
+
+# -------------------------------------------------
+# TABLAS Kt (FIGURA A-15-9)
+# -------------------------------------------------
+
+rd_tabla=[0.02,0.05,0.10,0.15,0.20,0.30]
+
+Kt_15=[2.7,2.1,1.68,1.65,1.55,1.45]
+Kt_11=[2.4,1.9,1.65,1.55,1.48,1.38]
+
+if Dd>=1.4:
+
+    Kt=interp(rd,rd_tabla,Kt_15)
+
+else:
+
+    Kt=interp(rd,rd_tabla,Kt_11)
+
+
+# -------------------------------------------------
+# TABLAS Kts (FIGURA A-15-8)
+# -------------------------------------------------
+
+Kts_tabla=[2.2,1.7,1.45,1.35,1.28,1.22]
+
+Kts=interp(rd,rd_tabla,Kts_tabla)
+
+
+# -------------------------------------------------
+# FACTORES DE FATIGA
+# -------------------------------------------------
+
+Kf=1+q*(Kt-1)
+Kfs=1+qs*(Kts-1)
+
+
+# -------------------------------------------------
+# ESFUERZOS
+# -------------------------------------------------
+
+sigma_a=(32*Ma)/(math.pi*d**3)
+sigma_m=(32*Mm)/(math.pi*d**3)
+
+tau_a=(16*Ta)/(math.pi*d**3)
+tau_m=(16*Tm)/(math.pi*d**3)
+
+sigma_a*=Kf
+sigma_m*=Kf
+
+tau_a*=Kfs
+tau_m*=Kfs
+
+
+if sistema==1:
+
+    sigma_a/=1000
+    sigma_m/=1000
+    tau_a/=1000
+    tau_m/=1000
+
+else:
+
+    sigma_a*=6.89476
+    sigma_m*=6.89476
+    tau_a*=6.89476
+    tau_m*=6.89476
+
+
+# -------------------------------------------------
+# VON MISES
+# -------------------------------------------------
+
+sigma_a_v=math.sqrt(sigma_a**2 + 3*tau_a**2)
+sigma_m_v=math.sqrt(sigma_m**2 + 3*tau_m**2)
+
+sigma_max=sigma_a_v + sigma_m_v
+
+
+# -------------------------------------------------
+# FACTORES DE SEGURIDAD
+# -------------------------------------------------
+
+n_vm=Syt/sigma_max
+
+n_goodman=1/((sigma_a_v/Se)+(sigma_m_v/Sut))
+n_soderberg=1/((sigma_a_v/Se)+(sigma_m_v/Syt))
+n_gerber=1/((sigma_a_v/Se)+(sigma_m_v/Sut)**2)
+n_asme=1/math.sqrt((sigma_a_v/Se)**2+(sigma_m_v/Syt)**2)
+
+
+# -------------------------------------------------
+# RESULTADOS
+# -------------------------------------------------
+
+print("\n==============================")
+print("RESULTADOS")
+print("==============================")
+
+print("\nSensibilidad a la muesca")
+print("q =",round(q,4))
+print("qs =",round(qs,4))
+
+print("\nFactores de concentracion")
+print("Kt =",round(Kt,4))
+print("Kts =",round(Kts,4))
+
+print("\nFactores de fatiga")
+print("Kf =",round(Kf,4))
+print("Kfs =",round(Kfs,4))
+
+print("\nEsfuerzos")
+print("sigma_a =",round(sigma_a,3),unidad)
+print("sigma_m =",round(sigma_m,3),unidad)
+print("tau_a =",round(tau_a,3),unidad)
+print("tau_m =",round(tau_m,3),unidad)
+
+print("\nVon Mises")
+print("sigma_a' =",round(sigma_a_v,3),unidad)
+print("sigma_m' =",round(sigma_m_v,3),unidad)
+
+print("\nσmax =",round(sigma_max,3),unidad)
+
+print("\nFactores de seguridad")
+print("Von Mises =",round(n_vm,3))
+print("Goodman =",round(n_goodman,3))
+print("Soderberg =",round(n_soderberg,3))
+print("Gerber =",round(n_gerber,3))
+print("ASME =",round(n_asme,3))
