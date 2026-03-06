@@ -16,7 +16,7 @@ El programa permite calcular automáticamente:
   - Soderberg
   - Gerber
   - ASME Elíptico
-  - 
+    
 # Objetivo
 
 Desarrollar una herramienta computacional que permita realizar el análisis de
